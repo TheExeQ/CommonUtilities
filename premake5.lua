@@ -13,7 +13,7 @@ workspace "CommonUtilities"
 outputdir = "%{cfg.buildcfg}-%{cfg.system}-%{cfg.architecture}"
 
 project "CommonUtilities"
-	location "./CommonUtilities/"
+	location "."
 		
 	language "C++"
 	cppdialect "C++20"
@@ -28,8 +28,8 @@ project "CommonUtilities"
 	}
 
 	includedirs {
-		"./CommonUtilities/",
-		"./CommonUtilities/include/"
+		".",
+		"./include/"
 	}
 
 	filter "configurations:Debug"
