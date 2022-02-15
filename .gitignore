@@ -1,3 +1,15 @@
+# Visual Studio Files
+.vs/
+Temp/
+bin/
+bin-int/
+tests/
+*.pdb
+*.idb
+*.vcxproj
+*.filters
+*.user
+
 # Prerequisites
 *.d
 
@@ -14,7 +26,6 @@
 # Compiled Dynamic libraries
 *.so
 *.dylib
-*.dll
 
 # Fortran module files
 *.mod
@@ -24,9 +35,13 @@
 *.lai
 *.la
 *.a
-*.lib
+Lib/External_Debug.lib
+Lib/Game_Debug.lib
+Lib/tga2dcore_Debug.lib
 
 # Executables
 *.exe
 *.out
 *.app
+
+!premake5.exe
