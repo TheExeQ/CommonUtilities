@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector2.h"
+#include "Vector2.hpp"
 #include <limits>
 
 namespace CommonUtilities

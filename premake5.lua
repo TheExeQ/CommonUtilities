@@ -24,6 +24,7 @@ project "CommonUtilities"
 
 	files {
 		"**.h",
+		"**.hpp",
 		"**.cpp"
 	}
 

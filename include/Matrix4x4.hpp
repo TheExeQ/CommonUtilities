@@ -1,5 +1,5 @@
 #pragma once
-#include "Vector4.h"
+#include "Vector4.hpp"
 #include <array>
 #include <cassert>
 

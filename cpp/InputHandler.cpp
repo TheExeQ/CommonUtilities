@@ -1,4 +1,4 @@
-#include "../include/InputHandler.h"
+#include "../include/InputHandler.hpp"
 #include <iostream>
 
 CommonUtilities::InputHandler::InputHandler()

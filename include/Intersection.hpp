@@ -1,8 +1,8 @@
 #pragma once
-#include "Plane.h"
-#include "Sphere.h"
-#include "AABB3D.h"
-#include "Ray.h"
+#include "Plane.hpp"
+#include "Sphere.hpp"
+#include "AABB3D.hpp"
+#include "Ray.hpp"
 #include <math.h>
 
 namespace CommonUtilities 
