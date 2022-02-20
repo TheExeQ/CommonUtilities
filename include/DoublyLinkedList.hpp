@@ -87,6 +87,7 @@ namespace CommonUtilities
 	bool CommonUtilities::DoublyLinkedList<T>::RemoveLast(const T& aValue)
 	{
 		auto* node = myTail;
+		if (!node) { return false; }
 		do
 		{
 			if (node->value == aValue)
@@ -101,14 +102,18 @@ namespace CommonUtilities
 				}
 				else if (node == myHead)
 				{
-					node->next->prev = nullptr;
+					if (node->next) { node->next->prev = nullptr; }
+					if (myTail == myHead) { myTail = nullptr; }
+					myHead = node->next;
 					delete node;
 					myCount--;
 					return true;
 				}
 				else if (node == myTail)
 				{
-					node->prev->next = nullptr;
+					if (node->prev) { node->prev->next = nullptr; }
+					if (myHead == myTail) { myHead = nullptr; }
+					myTail = node->prev;
 					delete node;
 					myCount--;
 					return true;
@@ -116,7 +121,7 @@ namespace CommonUtilities
 			}
 			node = node->prev;
 
-		} while (node->value != aValue && node != nullptr);
+		} while (node != nullptr);
 		return false;
 	}
 
@@ -124,6 +129,7 @@ namespace CommonUtilities
 	bool CommonUtilities::DoublyLinkedList<T>::RemoveFirst(const T& aValue)
 	{
 		auto* node = myHead;
+		if (!node) { return false; }
 		do
 		{
 			if (node->value == aValue)
@@ -138,14 +144,18 @@ namespace CommonUtilities
 				}
 				else if (node == myHead)
 				{
-					node->next->prev = nullptr;
+					if (node->next) { node->next->prev = nullptr; }
+					if (myTail == myHead) { myTail = nullptr; }
+					myHead = node->next;
 					delete node;
 					myCount--;
 					return true;
 				}
 				else if (node == myTail)
 				{
-					node->prev->next = nullptr;
+					if (node->prev) { node->prev->next = nullptr; }
+					if (myHead == myTail) { myHead = nullptr; }
+					myTail = node->prev;
 					delete node;
 					myCount--;
 					return true;
@@ -153,7 +163,7 @@ namespace CommonUtilities
 			}
 			node = node->next;
 
-		} while (node->value != aValue && node != nullptr);
+		} while (node != nullptr);
 		return false;
 	}
 
@@ -169,7 +179,7 @@ namespace CommonUtilities
 			}
 			node = node->prev;
 
-		} while (node->value != aValue && node != nullptr);
+		} while (node != nullptr);
 		return nullptr;
 	}
 
@@ -185,13 +195,14 @@ namespace CommonUtilities
 			}
 			node = node->next;
 
-		} while (node->value != aValue && node != nullptr);
+		} while (node != nullptr);
 		return nullptr;
 	}
 
 	template <class T>
 	void CommonUtilities::DoublyLinkedList<T>::Remove(DoublyLinkedListNode<T>* aNode)
 	{
+		if (!aNode) { return; }
 		if (aNode != myHead && aNode != myTail)
 		{
 			aNode->prev->next = aNode->next;
@@ -202,12 +213,14 @@ namespace CommonUtilities
 		else if (aNode == myHead)
 		{
 			aNode->next->prev = nullptr;
+			myHead = aNode->next;
 			delete aNode;
 			myCount--;
 		}
 		else if (aNode == myTail)
 		{
 			aNode->prev->next = nullptr;
+			myTail = aNode->prev;
 			delete aNode;
 			myCount--;
 		}
@@ -220,6 +233,7 @@ namespace CommonUtilities
 		newNode->prev = aNode;
 		newNode->next = aNode->next;
 		if (newNode->next != nullptr) newNode->next->prev = newNode;
+		else { myTail = newNode; }
 		if (newNode->prev != nullptr) newNode->prev->next = newNode;
 		myCount++;
 	}
@@ -232,6 +246,7 @@ namespace CommonUtilities
 		newNode->next = aNode;
 		if (newNode->next != nullptr) newNode->next->prev = newNode;
 		if (newNode->prev != nullptr) newNode->prev->next = newNode;
+		else { myHead = newNode; }
 		myCount++;
 	}
 
@@ -242,6 +257,8 @@ namespace CommonUtilities
 		newNode->prev = myTail;
 		newNode->next = nullptr;
 		myTail = newNode;
+		if (!newNode->prev) { myHead = myTail; }
+		else { myTail->prev->next = myTail; }
 		myCount++;
 	}
 
@@ -252,6 +269,8 @@ namespace CommonUtilities
 		newNode->prev = nullptr;
 		newNode->next = myHead;
 		myHead = newNode;
+		if (!newNode->next) { myTail = myHead; }
+		else { myHead->next->prev = myHead; }
 		myCount++;
 	}
 
@@ -276,11 +295,27 @@ namespace CommonUtilities
 	template <class T>
 	CommonUtilities::DoublyLinkedList<T>::~DoublyLinkedList()
 	{
-		auto* currentNode = myTail;
-		while (currentNode->prev)
+		DoublyLinkedListNode<T>* currentNode;
+		if (!myHead && !myTail) { return; }
+		else if (myTail)
 		{
-			currentNode = currentNode->prev;
-			delete currentNode->next;
+			currentNode = myTail;
+			while (currentNode->prev)
+			{
+				currentNode = currentNode->prev;
+				if (!currentNode->next) { delete currentNode->next; }
+			}
+			delete myTail;
+		}
+		else
+		{
+			currentNode = myHead;
+			while (currentNode->next)
+			{
+				currentNode = currentNode->next;
+				if (!currentNode->prev) { delete currentNode->prev; }
+			}
+			delete myHead;
 		}
 	}
 
