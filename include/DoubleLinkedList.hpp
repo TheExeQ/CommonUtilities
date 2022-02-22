@@ -3,88 +3,88 @@
 namespace CommonUtilities
 {
 	template <class T>
-	class DoublyLinkedList;
+	class DoubleLinkedList;
 
 	template <class T>
-	class DoublyLinkedListNode
+	class DoubleLinkedListNode
 	{
 	public:
-		DoublyLinkedListNode<T>(const DoublyLinkedListNode<T>&) = delete;
-		DoublyLinkedListNode<T>& operator=(const DoublyLinkedListNode<T>&) = delete;
+		DoubleLinkedListNode<T>(const DoubleLinkedListNode<T>&) = delete;
+		DoubleLinkedListNode<T>& operator=(const DoubleLinkedListNode<T>&) = delete;
 
 		const T& GetValue() const;
 		T& GetValue();
-		DoublyLinkedListNode<T>* GetNext() const;
-		DoublyLinkedListNode<T>* GetPrevious() const;
+		DoubleLinkedListNode<T>* GetNext() const;
+		DoubleLinkedListNode<T>* GetPrevious() const;
 
 	private:
-		friend class DoublyLinkedList<T>;
-		DoublyLinkedListNode(const T& aValue);
-		~DoublyLinkedListNode() {}
+		friend class DoubleLinkedList<T>;
+		DoubleLinkedListNode(const T& aValue);
+		~DoubleLinkedListNode() {}
 
 		T value;
-		DoublyLinkedListNode<T>* prev;
-		DoublyLinkedListNode<T>* next;
+		DoubleLinkedListNode<T>* prev;
+		DoubleLinkedListNode<T>* next;
 	};
 
 	template <class T>
-	class DoublyLinkedList
+	class DoubleLinkedList
 	{
 	public:
-		DoublyLinkedList();
-		~DoublyLinkedList();
+		DoubleLinkedList();
+		~DoubleLinkedList();
 
 		int GetSize() const;
-		DoublyLinkedListNode<T>* GetFirst();
-		DoublyLinkedListNode<T>* GetLast();
+		DoubleLinkedListNode<T>* GetFirst();
+		DoubleLinkedListNode<T>* GetLast();
 		void InsertFirst(const T& aValue);
 		void InsertLast(const T& aValue);
-		void InsertBefore(DoublyLinkedListNode<T>* aNode, const T& aValue);
-		void InsertAfter(DoublyLinkedListNode<T>* aNode, const T& aValue);
-		void Remove(DoublyLinkedListNode<T>* aNode);
-		DoublyLinkedListNode<T>* FindFirst(const T& aValue);
-		DoublyLinkedListNode<T>* FindLast(const T& aValue);
+		void InsertBefore(DoubleLinkedListNode<T>* aNode, const T& aValue);
+		void InsertAfter(DoubleLinkedListNode<T>* aNode, const T& aValue);
+		void Remove(DoubleLinkedListNode<T>* aNode);
+		DoubleLinkedListNode<T>* FindFirst(const T& aValue);
+		DoubleLinkedListNode<T>* FindLast(const T& aValue);
 		bool RemoveFirst(const T& aValue);
 		bool RemoveLast(const T& aValue);
 
 	private:
-		DoublyLinkedListNode<T>* myHead;
-		DoublyLinkedListNode<T>* myTail;
+		DoubleLinkedListNode<T>* myHead;
+		DoubleLinkedListNode<T>* myTail;
 		int myCount;
 	};
 
 	template <class T>
-	CommonUtilities::DoublyLinkedListNode<T>::DoublyLinkedListNode(const T& aValue)
+	CommonUtilities::DoubleLinkedListNode<T>::DoubleLinkedListNode(const T& aValue)
 	{
 		value = aValue;
 	}
 
 	template <class T>
-	CommonUtilities::DoublyLinkedListNode<T>* CommonUtilities::DoublyLinkedListNode<T>::GetPrevious() const
+	CommonUtilities::DoubleLinkedListNode<T>* CommonUtilities::DoubleLinkedListNode<T>::GetPrevious() const
 	{
 		return prev;
 	}
 
 	template <class T>
-	CommonUtilities::DoublyLinkedListNode<T>* CommonUtilities::DoublyLinkedListNode<T>::GetNext() const
+	CommonUtilities::DoubleLinkedListNode<T>* CommonUtilities::DoubleLinkedListNode<T>::GetNext() const
 	{
 		return next;
 	}
 
 	template <class T>
-	T& CommonUtilities::DoublyLinkedListNode<T>::GetValue()
+	T& CommonUtilities::DoubleLinkedListNode<T>::GetValue()
 	{
 		return value;
 	}
 
 	template <class T>
-	const T& CommonUtilities::DoublyLinkedListNode<T>::GetValue() const
+	const T& CommonUtilities::DoubleLinkedListNode<T>::GetValue() const
 	{
 		return value;
 	}
 
 	template <class T>
-	bool CommonUtilities::DoublyLinkedList<T>::RemoveLast(const T& aValue)
+	bool CommonUtilities::DoubleLinkedList<T>::RemoveLast(const T& aValue)
 	{
 		auto* node = myTail;
 		if (!node) { return false; }
@@ -120,13 +120,12 @@ namespace CommonUtilities
 				}
 			}
 			node = node->prev;
-
-		} while (node != nullptr);
+		} while (node);
 		return false;
 	}
 
 	template <class T>
-	bool CommonUtilities::DoublyLinkedList<T>::RemoveFirst(const T& aValue)
+	bool CommonUtilities::DoubleLinkedList<T>::RemoveFirst(const T& aValue)
 	{
 		auto* node = myHead;
 		if (!node) { return false; }
@@ -162,13 +161,12 @@ namespace CommonUtilities
 				}
 			}
 			node = node->next;
-
-		} while (node != nullptr);
+		} while (node);
 		return false;
 	}
 
 	template <class T>
-	CommonUtilities::DoublyLinkedListNode<T>* CommonUtilities::DoublyLinkedList<T>::FindLast(const T& aValue)
+	CommonUtilities::DoubleLinkedListNode<T>* CommonUtilities::DoubleLinkedList<T>::FindLast(const T& aValue)
 	{
 		auto* node = myTail;
 		do
@@ -178,13 +176,12 @@ namespace CommonUtilities
 				return node;
 			}
 			node = node->prev;
-
-		} while (node != nullptr);
+		} while (node);
 		return nullptr;
 	}
 
 	template <class T>
-	CommonUtilities::DoublyLinkedListNode<T>* CommonUtilities::DoublyLinkedList<T>::FindFirst(const T& aValue)
+	CommonUtilities::DoubleLinkedListNode<T>* CommonUtilities::DoubleLinkedList<T>::FindFirst(const T& aValue)
 	{
 		auto* node = myHead;
 		do
@@ -194,13 +191,12 @@ namespace CommonUtilities
 				return node;
 			}
 			node = node->next;
-
-		} while (node != nullptr);
+		} while (node);
 		return nullptr;
 	}
 
 	template <class T>
-	void CommonUtilities::DoublyLinkedList<T>::Remove(DoublyLinkedListNode<T>* aNode)
+	void CommonUtilities::DoubleLinkedList<T>::Remove(DoubleLinkedListNode<T>* aNode)
 	{
 		if (!aNode) { return; }
 		if (aNode != myHead && aNode != myTail)
@@ -227,9 +223,9 @@ namespace CommonUtilities
 	}
 
 	template <class T>
-	void CommonUtilities::DoublyLinkedList<T>::InsertAfter(DoublyLinkedListNode<T>* aNode, const T& aValue)
+	void CommonUtilities::DoubleLinkedList<T>::InsertAfter(DoubleLinkedListNode<T>* aNode, const T& aValue)
 	{
-		auto* newNode = new DoublyLinkedListNode<T>(aValue);
+		auto* newNode = new DoubleLinkedListNode<T>(aValue);
 		newNode->prev = aNode;
 		newNode->next = aNode->next;
 		if (newNode->next != nullptr) newNode->next->prev = newNode;
@@ -239,9 +235,9 @@ namespace CommonUtilities
 	}
 
 	template <class T>
-	void CommonUtilities::DoublyLinkedList<T>::InsertBefore(DoublyLinkedListNode<T>* aNode, const T& aValue)
+	void CommonUtilities::DoubleLinkedList<T>::InsertBefore(DoubleLinkedListNode<T>* aNode, const T& aValue)
 	{
-		auto* newNode = new DoublyLinkedListNode<T>(aValue);
+		auto* newNode = new DoubleLinkedListNode<T>(aValue);
 		newNode->prev = aNode->prev;
 		newNode->next = aNode;
 		if (newNode->next != nullptr) newNode->next->prev = newNode;
@@ -251,9 +247,9 @@ namespace CommonUtilities
 	}
 
 	template <class T>
-	void CommonUtilities::DoublyLinkedList<T>::InsertLast(const T& aValue)
+	void CommonUtilities::DoubleLinkedList<T>::InsertLast(const T& aValue)
 	{
-		auto* newNode = new DoublyLinkedListNode<T>(aValue);
+		auto* newNode = new DoubleLinkedListNode<T>(aValue);
 		newNode->prev = myTail;
 		newNode->next = nullptr;
 		myTail = newNode;
@@ -263,9 +259,9 @@ namespace CommonUtilities
 	}
 
 	template <class T>
-	void CommonUtilities::DoublyLinkedList<T>::InsertFirst(const T& aValue)
+	void CommonUtilities::DoubleLinkedList<T>::InsertFirst(const T& aValue)
 	{
-		auto* newNode = new DoublyLinkedListNode<T>(aValue);
+		auto* newNode = new DoubleLinkedListNode<T>(aValue);
 		newNode->prev = nullptr;
 		newNode->next = myHead;
 		myHead = newNode;
@@ -275,27 +271,27 @@ namespace CommonUtilities
 	}
 
 	template <class T>
-	CommonUtilities::DoublyLinkedListNode<T>* CommonUtilities::DoublyLinkedList<T>::GetLast()
+	CommonUtilities::DoubleLinkedListNode<T>* CommonUtilities::DoubleLinkedList<T>::GetLast()
 	{
 		return myTail;
 	}
 
 	template <class T>
-	CommonUtilities::DoublyLinkedListNode<T>* CommonUtilities::DoublyLinkedList<T>::GetFirst()
+	CommonUtilities::DoubleLinkedListNode<T>* CommonUtilities::DoubleLinkedList<T>::GetFirst()
 	{
 		return myHead;
 	}
 
 	template <class T>
-	int CommonUtilities::DoublyLinkedList<T>::GetSize() const
+	int CommonUtilities::DoubleLinkedList<T>::GetSize() const
 	{
 		return myCount;
 	}
 
 	template <class T>
-	CommonUtilities::DoublyLinkedList<T>::~DoublyLinkedList()
+	CommonUtilities::DoubleLinkedList<T>::~DoubleLinkedList()
 	{
-		DoublyLinkedListNode<T>* currentNode;
+		DoubleLinkedListNode<T>* currentNode;
 		if (!myHead && !myTail) { return; }
 		else if (myTail)
 		{
@@ -320,7 +316,7 @@ namespace CommonUtilities
 	}
 
 	template <class T>
-	CommonUtilities::DoublyLinkedList<T>::DoublyLinkedList()
+	CommonUtilities::DoubleLinkedList<T>::DoubleLinkedList()
 	{
 		myHead = nullptr;
 		myTail = nullptr;
