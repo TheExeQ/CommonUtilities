@@ -208,14 +208,14 @@ namespace CommonUtilities
 		}
 		else if (aNode == myHead)
 		{
-			aNode->next->prev = nullptr;
+			if (aNode->next) { aNode->next->prev = nullptr; }
 			myHead = aNode->next;
 			delete aNode;
 			myCount--;
 		}
 		else if (aNode == myTail)
 		{
-			aNode->prev->next = nullptr;
+			if (aNode->prev) { aNode->prev->next = nullptr; }
 			myTail = aNode->prev;
 			delete aNode;
 			myCount--;
