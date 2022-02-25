@@ -30,7 +30,8 @@ namespace CommonUtilities
 		assert(mySize > 0 && "Queue size is empty");
 		myFirst++;
 		mySize--;
-		if (mySize == 0 || !myQueue.size())
+		if (!myQueue.size()) return 0;
+		else if (mySize == 0)
 		{
 			auto returnValue = myQueue[myFirst - 1];
 			myFirst = 0;
@@ -39,7 +40,7 @@ namespace CommonUtilities
 			myQueue.clear();
 			return returnValue;
 		}
-		if (myFirst >= myQueue.size()) 
+		else if (myFirst >= myQueue.size()) 
 		{
 			myFirst = 0;
 			return myQueue[myQueue.size() - 1];
