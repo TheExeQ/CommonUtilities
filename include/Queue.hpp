@@ -21,42 +21,74 @@ namespace CommonUtilities
 		std::vector<T> myQueue;
 		int myFirst;
 		int myLast;
+		int mySize;
 	};
 
 	template <class T>
 	T Queue<T>::Dequeue()
 	{
-		assert(myFirst <= myLast && "Last is bigger or equal to first");
+		assert(mySize > 0 && "Queue size is empty");
 		myFirst++;
-		if (!myQueue.size()) return 0;
+		mySize--;
+		if (mySize == 0 || !myQueue.size())
+		{
+			auto returnValue = myQueue[myFirst - 1];
+			myFirst = 0;
+			myLast = 0;
+			mySize = 0;
+			myQueue.clear();
+			return returnValue;
+		}
+		if (myFirst >= myQueue.size()) 
+		{
+			myFirst = 0;
+			return myQueue[myQueue.size() - 1];
+		}
 		return myQueue[myFirst - 1];
 	}
 
 	template <class T>
 	void Queue<T>::Enqueue(const T& aValue)
 	{
-		myQueue.emplace_back(aValue);
-		myLast++;
+		if (myFirst == 0)
+		{
+			myQueue.emplace_back(aValue);
+			myLast++;
+		}
+		else if (myFirst == myLast && mySize > 0)
+		{
+			auto it = myQueue.begin() + myLast;
+			myQueue.insert(it, aValue);
+			myLast++;
+			myFirst++;
+		}
+		else if (myFirst > 0)
+		{
+			if (myFirst < myLast) myLast = 1;
+			else myLast++;
+			myQueue[myLast - 1] = aValue;
+		}
+		mySize++;
 	}
 
 	template <class T>
 	T& Queue<T>::GetFront()
 	{
-		assert(myLast - myFirst > 0 && "Queue size is empty");
+		assert(mySize > 0 && "Queue size is empty");
 		return myQueue[myFirst];
 	}
 
 	template <class T>
 	const T& Queue<T>::GetFront() const
 	{
-		assert(myLast - myFirst > 0 && "Queue size is empty");
+		assert(mySize > 0 && "Queue size is empty");
 		return myQueue[myFirst];
 	}
 
 	template <class T>
 	int Queue<T>::GetSize() const
 	{
-		return myLast - myFirst;
+		return mySize;
 	}
 
 	template <class T>
@@ -64,5 +96,6 @@ namespace CommonUtilities
 	{
 		myFirst = 0;
 		myLast = 0;
+		mySize = 0;
 	}
 }
