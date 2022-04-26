@@ -8,10 +8,10 @@ namespace CommonUtilities
 	class Heap
 	{
 	public:
-		int GetSize() const; //returnerar antal element i heapen
-		void Enqueue(const T& aElement); //lägger till elementet i heapen
-		const T& GetTop() const; //returnerar det största elementet i heapen
-		T Dequeue(); //tar bort det största elementet ur heapen och returnerar det
+		int GetSize() const;
+		void Enqueue(const T& aElement);
+		const T& GetTop() const;
+		T Dequeue();
 
 	private:
 		void SortChild(T& outChild, T& outParent);
