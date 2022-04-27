@@ -31,7 +31,7 @@ namespace CommonUtilities
 			eHashState state;
 		};
 
-		const uint8_t mySize;
+		const uint32_t mySize;
 		Entry* myEntries;
 	};
 
