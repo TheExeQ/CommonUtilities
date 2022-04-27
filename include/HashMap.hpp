@@ -68,12 +68,23 @@ namespace CommonUtilities
 	template <class Key, class Value>
 	Value* HashMap<Key, Value>::Get(const Key& aKey)
 	{
+		bool loopedToFirst = false;
 		uint32_t index = Hash(aKey) % mySize;
+		uint32_t bindex = Hash(aKey) % mySize;
 
 		while ((myEntries[index].key < aKey) || (aKey < myEntries[index].key))
 		{
 			index++;
 			if (index >= mySize)
+			{
+				index = 0;
+				loopedToFirst = true;
+				if (loopedToFirst && index == Hash(aKey) % mySize) 
+				{
+					return nullptr;
+				}
+			}
+			else if (loopedToFirst && index == Hash(aKey) % mySize)
 			{
 				return nullptr;
 			}
@@ -88,12 +99,22 @@ namespace CommonUtilities
 	template <class Key, class Value>
 	const Value* HashMap<Key, Value>::Get(const Key& aKey) const
 	{
+		bool loopedToFirst = false;
 		uint32_t index = Hash(aKey) % mySize;
 
 		while ((myEntries[index].key < aKey) || (aKey < myEntries[index].key))
 		{
 			index++;
 			if (index >= mySize)
+			{
+				index = 0;
+				loopedToFirst = true;
+				if (loopedToFirst && index == Hash(aKey) % mySize)
+				{
+					return nullptr;
+				}
+			}
+			else if (loopedToFirst && index == Hash(aKey) % mySize)
 			{
 				return nullptr;
 			}
@@ -108,6 +129,12 @@ namespace CommonUtilities
 	template <class Key, class Value>
 	bool HashMap<Key, Value>::Remove(const Key& aKey)
 	{
+		if (!myEntries || mySize <= 0)
+		{
+			return false;
+		}
+
+		bool loopedToFirst = false;
 		uint32_t index = Hash(aKey) % mySize;
 
 		while (myEntries[index].key < aKey || aKey < myEntries[index].key && myEntries[index].state != eHashState::Empty)
@@ -115,7 +142,16 @@ namespace CommonUtilities
 			index++;
 			if (index >= mySize)
 			{
-				return false;
+				index = 0;
+				loopedToFirst = true;
+				if (loopedToFirst && index == Hash(aKey) % mySize)
+				{
+					return nullptr;
+				}
+			}
+			else if (loopedToFirst && index == Hash(aKey) % mySize)
+			{
+				return nullptr;
 			}
 		}
 		myEntries[index].key = Key();
@@ -142,6 +178,10 @@ namespace CommonUtilities
 			{
 				index = 0;
 				loopedToFirst = true;
+				if (loopedToFirst && index == Hash(aKey) % mySize)
+				{
+					return nullptr;
+				}
 			}
 			else if (loopedToFirst && index == Hash(aKey) % mySize)
 			{
